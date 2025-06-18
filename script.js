@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
     initializeTimeline();
-    initializeProjects();
     initializeContactForm();
     initializeScrollAnimations();
     initializeMobileMenu();
@@ -108,176 +107,27 @@ function initializeTimeline() {
     });
 }
 
-// Proyectos interactivos
-function initializeProjects() {
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach(card => {
-        const overlay = card.querySelector('.project-overlay');
-        const image = card.querySelector('.project-image img');
-        
-        // Efecto parallax sutil en las imágenes
-        card.addEventListener('mousemove', function(e) {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-        });
-        
-        // Animación de entrada del overlay
-        card.addEventListener('mouseenter', function() {
-            overlay.style.opacity = '1';
-            overlay.style.transform = 'scale(1)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            overlay.style.opacity = '0';
-            overlay.style.transform = 'scale(0.95)';
-        });
-        
-        // Click en botón de caso de estudio
-        const caseStudyBtn = card.querySelector('.btn-case-study');
-        if (caseStudyBtn) {
-            caseStudyBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                showProjectModal(card.dataset.project);
-            });
-        }
-    });
-}
-
-// Modal para casos de estudio (simulado)
-function showProjectModal(projectId) {
-    const projectTitles = {
-        '1': 'App de Trading Móvil',
-        '2': 'Wallet Digital',
-        '3': 'Dashboard Financiero',
-        '4': 'Banca Online'
-    };
-    
-    const projectDescriptions = {
-        '1': 'Diseño completo de una aplicación de trading móvil que simplifica las inversiones para usuarios principiantes y avanzados.',
-        '2': 'Sistema de pagos móviles con enfoque en seguridad y experiencia de usuario fluida.',
-        '3': 'Panel de control intuitivo para gestión de finanzas personales con visualizaciones de datos claras.',
-        '4': 'Rediseño completo de plataforma bancaria mejorando la usabilidad y accesibilidad.'
-    };
-    
-    // Crear modal dinámicamente
-    const modal = document.createElement('div');
-    modal.className = 'project-modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>${projectTitles[projectId]}</h2>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>${projectDescriptions[projectId]}</p>
-                <p><strong>Nota:</strong> Este es un proyecto de demostración. En un portafolio real, aquí se mostraría el caso de estudio completo con imágenes, proceso de diseño, resultados y métricas.</p>
-            </div>
-        </div>
-    `;
-    
-    // Estilos del modal
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 2000;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    `;
-    
-    const modalContent = modal.querySelector('.modal-content');
-    modalContent.style.cssText = `
-        background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        max-width: 600px;
-        width: 90%;
-        max-height: 80vh;
-        overflow-y: auto;
-        transform: scale(0.7);
-        transition: transform 0.3s ease;
-    `;
-    
-    const modalHeader = modal.querySelector('.modal-header');
-    modalHeader.style.cssText = `
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid #eee;
-    `;
-    
-    const closeBtn = modal.querySelector('.modal-close');
-    closeBtn.style.cssText = `
-        background: none;
-        border: none;
-        font-size: 2rem;
-        cursor: pointer;
-        color: #666;
-        transition: color 0.2s ease;
-    `;
-    
-    document.body.appendChild(modal);
-    
-    // Animación de entrada
-    setTimeout(() => {
-        modal.style.opacity = '1';
-        modalContent.style.transform = 'scale(1)';
-    }, 10);
-    
-    // Cerrar modal
-    function closeModal() {
-        modal.style.opacity = '0';
-        modalContent.style.transform = 'scale(0.7)';
-        setTimeout(() => {
-            document.body.removeChild(modal);
-        }, 300);
-    }
-    
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
-    
-    // Cerrar con ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeModal();
-        }
-    });
-}
-
 // Formulario de contacto
 function initializeContactForm() {
     const form = document.getElementById('contactForm');
-    const submitBtn = form.querySelector('.btn-submit');
+    const submitBtn = form.querySelector('.btn-primary');
+    
+    if (!form) {
+        console.error('Formulario contactForm no encontrado');
+        return;
+    }
+    
+    if (!submitBtn) {
+        console.error('Botón .btn-primary no encontrado');
+        return;
+    }
+    
+    console.log('Formulario de contacto inicializado correctamente');
     const originalBtnText = submitBtn.innerHTML;
     
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        console.log('Formulario interceptado por JavaScript');
         
         // Validación básica
         const formData = new FormData(form);
@@ -296,20 +146,32 @@ function initializeContactForm() {
             return;
         }
         
-        // Simular envío
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        // Deshabilitar botón para evitar envíos múltiples
         submitBtn.disabled = true;
         
+        // Abrir Gmail con datos pre-rellenados
+        const emailBody = `Hola Pau,
+
+${message}
+
+Saludos,
+${name}
+${email}`;
+        
+        const mailtoLink = `mailto:pauberenguerlabella@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+        
+        // Abrir enlace mailto
+        window.location.href = mailtoLink;
+        
+        // Mostrar confirmación
+        submitBtn.innerHTML = '<i class="fas fa-check"></i> ¡Abriendo Gmail!';
+        showNotification('¡Perfecto! Se ha abierto Gmail con tu mensaje pre-rellenado. Solo tienes que enviarlo.', 'success');
+        form.reset();
+        
         setTimeout(() => {
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> ¡Enviado!';
-            showNotification('¡Mensaje enviado correctamente! Te responderé pronto.', 'success');
-            form.reset();
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
-            }, 2000);
-        }, 2000);
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        }, 3000);
     });
     
     // Validación en tiempo real
@@ -489,17 +351,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Contador animado para estadísticas
     const statNumbers = document.querySelectorAll('.stat-number');
     const animateCounter = (element) => {
-        const target = parseInt(element.textContent);
+        const originalText = element.textContent;
+        // Remover puntos y el símbolo + para obtener el número real
+        const target = parseInt(originalText.replace(/\./g, '').replace('+', ''));
         const increment = target / 50;
         let current = 0;
+        
+        const formatNumber = (num) => {
+            if (num >= 1000) {
+                return num.toLocaleString('es-ES') + '+';
+            } else {
+                return num + '+';
+            }
+        };
         
         const timer = setInterval(() => {
             current += increment;
             if (current >= target) {
-                element.textContent = target + '+';
+                element.textContent = formatNumber(target);
                 clearInterval(timer);
             } else {
-                element.textContent = Math.floor(current) + '+';
+                element.textContent = formatNumber(Math.floor(current));
             }
         }, 30);
     };
@@ -535,5 +407,66 @@ window.addEventListener('load', function() {
     });
     
     images.forEach(img => imageObserver.observe(img));
+});
+
+// PREVENCIÓN DE ERRORES GLOBALES
+window.addEventListener('error', function(e) {
+    // Suprimir errores específicos de focus que vienen de scripts externos
+    if (e.message && e.message.includes('focus') && 
+        (e.lineno === 586 || e.message.includes('Cannot read properties of null'))) {
+        console.log('Error de focus suprimido (probablemente de script externo)');
+        e.preventDefault();
+        return false;
+    }
+});
+
+// FUNCIONES DEL MODAL NEWSLETTER
+function openNewsletterModal() {
+    console.log('Abriendo modal de newsletter');
+    
+    const modal = document.getElementById('newsletterModal');
+    if (!modal) {
+        console.error('Modal no encontrado');
+        showNotification('Error al abrir el formulario. Inténtalo más tarde.', 'error');
+        return;
+    }
+    
+    // Mostrar modal
+    modal.style.display = 'flex';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    console.log('Modal abierto correctamente');
+}
+
+function closeNewsletterModal() {
+    console.log('Cerrando modal de newsletter');
+    
+    const modal = document.getElementById('newsletterModal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Event listeners para el modal
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('newsletterModal');
+    if (!modal) return;
+    
+    // Cerrar con click fuera
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeNewsletterModal();
+        }
+    });
+    
+    // Cerrar con ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeNewsletterModal();
+        }
+    });
 });
 
