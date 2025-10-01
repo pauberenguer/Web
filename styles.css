@@ -181,6 +181,14 @@ body {
     transform: translateY(-2px);
 }
 
+/* Botón de comunidad más ancho en hero */
+.btn-community-wide {
+    min-width: 310px;
+    padding-left: var(--spacing-xxl);
+    padding-right: var(--spacing-xxl);
+    font-weight: var(--font-weight-semibold);
+}
+
 /* Elementos flotantes del héroe */
 .hero-visual {
     position: relative;
@@ -706,7 +714,8 @@ section {
 /* Responsive Design */
 @media (max-width: 1024px) {
     .hero-visual {
-        display: none;
+        order: -1;
+        margin-bottom: var(--spacing-lg);
     }
     
     .about-content {
@@ -932,8 +941,8 @@ section {
     color: #0077b5;
 }
 
-.social-link-card.discord:hover i {
-    color: #7289da;
+.social-link-card.skool:hover i {
+    color: #4A90E2;
 }
 
 .platform-name {
@@ -1068,8 +1077,17 @@ section {
 
 @media (max-width: 480px) {
     .profile-image {
-        width: 250px;
-        height: 250px;
+        width: 180px;
+        height: 180px;
+        margin: 0 auto;
+    }
+    
+    .hero-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        order: -1;
+        margin-top: calc(var(--spacing-xxl) + 1rem);
     }
     
     .social-link-card {
@@ -1224,16 +1242,30 @@ section {
     color: var(--white);
 }
 
-.cta-button.discord {
-    background: #7289da;
-    border-color: #7289da;
-    color: var(--white);
+.cta-button.skool {
+    background: #4A90E2;
+    border-color: #4A90E2;
+    color: white;
 }
 
-.cta-button.discord:hover {
-    background: #5b6eae;
-    border-color: #5b6eae;
-    color: var(--white);
+.cta-button.skool:hover {
+    background: #357ABD;
+    border-color: #357ABD;
+    color: white;
+}
+
+.skool-logo {
+    width: 20px;
+    height: 20px;
+    color: #4A90E2;
+}
+
+.cta-button.skool .skool-logo {
+    color: white;
+}
+
+.cta-button.skool:hover .skool-logo {
+    color: white;
 }
 
 .cta-button.newsletter:hover {
@@ -1272,6 +1304,12 @@ section {
     font-size: 20px;
 }
 
+.cta-button .skool-logo {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
 /* Ajustes responsivos para las nuevas secciones */
 @media (max-width: 768px) {
     .testimonials-grid {
@@ -1295,8 +1333,21 @@ section {
     }
     
     .cta-button {
-        padding: 15px 20px;
-        font-size: 14px;
+        padding: 18px 25px;
+        font-size: 15px;
+        min-height: 60px;
+        width: 100%;
+        max-width: none;
+        flex: 1;
+    }
+    
+    .cta-button.newsletter-featured {
+        padding: 18px 25px;
+        font-size: 15px;
+        min-height: 60px;
+        width: 100%;
+        max-width: none !important;
+        flex: 1;
     }
 }
 
@@ -1326,7 +1377,15 @@ section {
     .profile-image {
         width: 200px;
         height: 200px;
-        }
+        margin: 0 auto;
+    }
+    
+    .hero-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: calc(var(--spacing-xl) + 1rem);
+    }
 }
 
 /* Estilos del Modal Newsletter */
@@ -1346,6 +1405,7 @@ section {
     transition: opacity 0.3s ease;
     padding: 20px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .newsletter-modal.active {
@@ -1357,7 +1417,7 @@ section {
     background: var(--white);
     border-radius: var(--radius-xl);
     position: relative;
-    max-width: 910px;
+    max-width: 700px;
     width: 100%;
     max-height: calc(100vh - 40px);
     overflow: visible;
@@ -1365,6 +1425,8 @@ section {
     transition: all var(--transition-normal);
     box-shadow: var(--shadow-xl);
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .newsletter-modal.active .newsletter-modal-content {
@@ -1374,12 +1436,25 @@ section {
 .newsletter-content {
     padding: var(--spacing-xl);
     max-width: 100%;
+    width: 100%;
     box-sizing: border-box;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
 }
 
 .newsletter-header {
     text-align: center;
     margin-bottom: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .newsletter-header h2 {
@@ -1387,12 +1462,19 @@ section {
     margin-bottom: var(--spacing-sm);
     font-size: 1.8rem;
     font-weight: var(--font-weight-bold);
+    text-align: center;
+    width: 100%;
+    display: block;
 }
 
 .newsletter-header p {
     color: var(--medium-gray);
     font-size: 1.1rem;
     line-height: 1.5;
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
 }
 
 .newsletter-modal-close {
@@ -1414,101 +1496,311 @@ section {
 
 .beehiiv-embed {
     border-radius: var(--radius-md);
-    min-height: 370px;
+    min-height: 280px;
     width: 100%;
+    max-width: 550px;
     border: none;
     display: block;
     margin: 0 auto;
-    height: 370px;
+    height: 280px;
     background: transparent;
+    flex: 1;
+    overflow: visible;
+    box-sizing: border-box;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* Específico para el contenedor del iframe */
 .newsletter-content .beehiiv-embed {
     width: 100% !important;
-    height: 370px !important;
+    height: 280px !important;
     border: none !important;
-    margin: 0 !important;
-    min-width: 100% !important;
-    max-width: 100% !important;
+    margin: 0 auto !important;
+    min-width: auto !important;
+    max-width: 550px !important;
+    overflow: visible !important;
+    text-align: center !important;
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
 }
 
 /* Forzar estilos para todo el contenido del iframe */
 .newsletter-modal iframe,
 .newsletter-modal iframe * {
-    max-width: 100% !important;
+    max-width: none !important;
     box-sizing: border-box !important;
+    overflow-x: visible !important;
+}
+
+.newsletter-modal iframe {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: auto !important;
+}
+
+/* Forzar eliminación de scroll horizontal en el iframe */
+.newsletter-modal iframe::-webkit-scrollbar-track-piece:horizontal {
+    display: none !important;
+}
+
+.newsletter-modal iframe::-webkit-scrollbar:horizontal {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* Estilo adicional para contenido compacto en móvil */
+@media (max-width: 480px) {
+    .newsletter-modal iframe {
+        transform: translateX(-80%) scale(0.8) !important;
+        transform-origin: left center !important;
+        height: 550px !important;
+        overflow: visible !important;
+        overflow-x: visible !important;
+        display: block !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        position: relative !important;
+        left: -20% !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .newsletter-modal iframe {
+        transform: translateX(-90%) scale(0.75) !important;
+        transform-origin: left center !important;
+        height: 600px !important;
+        overflow: visible !important;
+        overflow-x: visible !important;
+        display: block !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        position: relative !important;
+        left: -30% !important;
+    }
 }
 
 /* Media queries para dispositivos móviles */
 @media (max-width: 768px) {
     .newsletter-modal {
-        padding: 10px !important;
+        padding: 5px !important;
+        align-items: flex-start !important;
+        padding-top: 10px !important;
+        overflow-y: auto !important;
+        overflow-x: auto !important;
+        min-height: 100vh !important;
     }
     
     .newsletter-modal-content {
         max-width: calc(100vw - 20px) !important;
         width: calc(100vw - 20px) !important;
         max-height: calc(100vh - 20px) !important;
-        margin: 0 !important;
+        min-height: calc(380px / 1.3) !important;
+        margin: 0 auto !important;
+        overflow: auto !important;
     }
     
     .newsletter-content {
-        padding: var(--spacing-sm) !important;
+        padding: calc(var(--spacing-sm) / 1.3) calc(var(--spacing-xs) / 1.3) !important;
+        overflow: auto !important;
+        width: 120% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding-left: calc(5px / 1.3) !important;
+        margin-left: calc(-50px / 1.3) !important;
+    }
+    
+    .newsletter-header {
+        margin-bottom: calc(var(--spacing-xs) / 1.3) !important;
+        text-align: left !important;
     }
     
     .newsletter-header h2 {
-        font-size: 1.4rem !important;
-        margin-bottom: var(--spacing-xs) !important;
+        font-size: 1.2rem !important;
+        margin-bottom: 6px !important;
+        line-height: 1.2 !important;
+        text-align: left !important;
+        width: 100% !important;
     }
     
     .newsletter-header p {
-        font-size: 0.9rem !important;
-        margin-bottom: var(--spacing-sm) !important;
+        font-size: calc(0.8rem / 1.3) !important;
+        margin-bottom: calc(var(--spacing-xs) / 1.3) !important;
+        line-height: 1.3 !important;
+        text-align: left !important;
+        width: 100% !important;
     }
     
     .beehiiv-embed {
-        min-height: 320px !important;
-        height: 320px !important;
+        min-height: calc(280px / 1.3) !important;
+        height: calc(280px / 1.3) !important;
+        border-radius: calc(8px / 1.3) !important;
+        overflow: auto !important;
+        margin: 0 auto !important;
+        display: block !important;
+        width: 150% !important;
+        max-width: none !important;
+        position: relative !important;
+        left: 0 !important;
+        transform: scale(1) !important;
+        transform-origin: top left !important;
     }
 }
 
 @media (max-width: 480px) {
     .newsletter-modal {
-        padding: 5px !important;
+        padding: 3px !important;
+        align-items: flex-start !important;
+        padding-top: 5px !important;
+        overflow-y: auto !important;
+        overflow-x: auto !important;
+        min-height: 100vh !important;
+    }
+    
+    .newsletter-modal-content {
+        max-width: calc(100vw - 15px) !important;
+        width: calc(100vw - 15px) !important;
+        max-height: calc(100vh - 15px) !important;
+        min-height: calc(380px / 1.3) !important;
+        border-radius: calc(8px / 1.3) !important;
+        margin: 0 auto !important;
+        overflow: auto !important;
+    }
+    
+    .newsletter-content {
+        padding: calc(8px / 1.3) calc(4px / 1.3) !important;
+        overflow: auto !important;
+        width: 120% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding-left: calc(3px / 1.3) !important;
+        margin-left: calc(-60px / 1.3) !important;
+    }
+    
+    .newsletter-header {
+        margin-bottom: calc(8px / 1.3) !important;
+        text-align: center !important;
+    }
+    
+    .newsletter-header h2 {
+        font-size: 1.1rem !important;
+        margin-bottom: 4px !important;
+        line-height: 1.1 !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    .newsletter-header p {
+        font-size: calc(0.75rem / 1.3) !important;
+        margin-bottom: calc(8px / 1.3) !important;
+        line-height: 1.2 !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    .beehiiv-embed {
+        min-height: calc(280px / 1.3) !important;
+        height: calc(280px / 1.3) !important;
+        border-radius: calc(6px / 1.3) !important;
+        overflow: auto !important;
+        margin: 0 auto !important;
+        display: block !important;
+        width: 150% !important;
+        max-width: none !important;
+        position: relative !important;
+        left: 0 !important;
+        transform: scale(1) !important;
+        transform-origin: top left !important;
+    }
+    
+    .newsletter-modal-close {
+        top: calc(8px / 1.3) !important;
+        right: calc(8px / 1.3) !important;
+        font-size: calc(1.5rem / 1.3) !important;
+        z-index: 1000 !important;
+    }
+}
+
+/* Pantallas muy pequeñas (menos de 360px) */
+@media (max-width: 360px) {
+    .newsletter-modal {
+        padding: 3px !important;
+        padding-top: 5px !important;
+        min-height: 100vh !important;
+        overflow-x: auto !important;
+        overflow-y: auto !important;
     }
     
     .newsletter-modal-content {
         max-width: calc(100vw - 10px) !important;
         width: calc(100vw - 10px) !important;
         max-height: calc(100vh - 10px) !important;
-        border-radius: 8px !important;
+        min-height: calc(380px / 1.3) !important;
+        border-radius: calc(6px / 1.3) !important;
+        overflow: auto !important;
     }
     
     .newsletter-content {
-        padding: var(--spacing-xs) !important;
+        padding: calc(6px / 1.3) calc(3px / 1.3) !important;
+        overflow: auto !important;
+        width: 120% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding-left: calc(2px / 1.3) !important;
+        margin-left: calc(-70px / 1.3) !important;
+    }
+    
+    .newsletter-header {
+        margin-bottom: calc(6px / 1.3) !important;
+        text-align: center !important;
     }
     
     .newsletter-header h2 {
-        font-size: 1.2rem !important;
-        margin-bottom: 4px !important;
+        font-size: 1rem !important;
+        margin-bottom: 3px !important;
+        line-height: 1.1 !important;
+        text-align: center !important;
+        width: 100% !important;
     }
     
     .newsletter-header p {
-        font-size: 0.85rem !important;
-        margin-bottom: var(--spacing-xs) !important;
-        line-height: 1.3 !important;
+        font-size: calc(0.7rem / 1.3) !important;
+        margin-bottom: calc(6px / 1.3) !important;
+        line-height: 1.2 !important;
+        text-align: center !important;
+        width: 100% !important;
     }
     
     .beehiiv-embed {
-        min-height: 290px !important;
-        height: 290px !important;
-    }
-    
-    .newsletter-modal-close {
-        top: 8px !important;
-        right: 8px !important;
-        font-size: 1.5rem !important;
+        min-height: calc(280px / 1.3) !important;
+        height: calc(280px / 1.3) !important;
+        border-radius: calc(4px / 1.3) !important;
+        overflow: auto !important;
+        margin: 0 auto !important;
+        display: block !important;
+        width: 150% !important;
+        max-width: none !important;
+        position: relative !important;
+        left: 0 !important;
+        transform: scale(1) !important;
+        transform-origin: top left !important;
     }
 }
 

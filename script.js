@@ -468,5 +468,55 @@ document.addEventListener('DOMContentLoaded', function() {
             closeNewsletterModal();
         }
     });
+    
+    // Manejo de errores del iframe
+    const iframe = modal.querySelector('iframe.beehiiv-embed');
+    if (iframe) {
+        iframe.addEventListener('error', function() {
+            console.log('Error cargando iframe de beehiiv');
+            showIframeError();
+        });
+        
+        // Timeout para detectar si el iframe no carga
+        setTimeout(function() {
+            try {
+                // Intentar acceder al contenido del iframe
+                if (!iframe.contentDocument && !iframe.contentWindow) {
+                    console.log('Iframe no cargó después de 5 segundos');
+                    showIframeError();
+                }
+            } catch (e) {
+                // Si hay error de cross-origin, el iframe probablemente está cargando
+                console.log('Iframe cargando (cross-origin access blocked - esto es normal)');
+            }
+        }, 5000);
+    }
 });
+
+// Función para mostrar error del iframe
+function showIframeError() {
+    const modal = document.getElementById('newsletterModal');
+    const iframe = modal.querySelector('iframe.beehiiv-embed');
+    
+    if (iframe && iframe.parentNode) {
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px dashed #dee2e6;
+        `;
+        errorDiv.innerHTML = `
+            <h3 style="color: #495057; margin-bottom: 1rem;">📧 Formulario Temporalmente No Disponible</h3>
+            <p style="color: #6c757d; margin-bottom: 1.5rem;">El formulario de suscripción no está disponible en este momento.</p>
+            <a href="https://subscribe-forms.beehiiv.com/fd3d291b-06cf-4a7f-b3cd-015d14d54d81" 
+               target="_blank" 
+               style="background: #4ecdc4; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold;">
+               Suscribirse Directamente →
+            </a>
+        `;
+        iframe.parentNode.replaceChild(errorDiv, iframe);
+    }
+}
 
