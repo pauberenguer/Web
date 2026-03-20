@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FDFBF7;
+  --color-sage: #8A9A5B;
+  --color-sage-light: #A4B47D;
+  --color-sage-dark: #72804D;
+  --color-terracotta: #E2725B;
+  --color-terracotta-light: #E98F7C;
+  --color-terracotta-dark: #C05640;
+
+  --font-sans: Inter, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-gray-800 antialiased;
+  }
+}
